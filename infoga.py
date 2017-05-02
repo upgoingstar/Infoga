@@ -24,6 +24,7 @@ from lib import Info
 from lib import Printer 
 from lxml.html import fromstring
 from recon import *
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import json
 import os 
 import sys
@@ -85,6 +86,7 @@ class Infoga(object):
 					new.append(e)
 			for s in range(len(new)):
 				net = urllib3.PoolManager()
+				res = requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 				res = net.request("GET","https://api.shodan.io/shodan/host/"+new[s]+"?key=UNmOjxeFS2mPA3kmzm1sZwC0XjaTTksy")
 				jso = json.loads(res.data)
 				try:
@@ -178,6 +180,7 @@ class Infoga(object):
 			if e not in new:
 				new.append(e)
 		for s in range(len(new)):
+			net = urllib3.disable_warnings()
 			net = urllib3.PoolManager()
 			res = net.request("GET","https://api.shodan.io/shodan/host/"+new[s]+"?key=UNmOjxeFS2mPA3kmzm1sZwC0XjaTTksy")
 			jso = json.loads(res.data)
