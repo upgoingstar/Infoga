@@ -93,7 +93,11 @@ class Infoga(object):
 					self.sock = socket.gethostbyaddr(new[s])[0]
 				except socket.herror,err:
 					try:
-						self.sock = jso["hostnames"][0]
+						if len(jso["hostnames"]) != 0:
+							self.sock = jso["hostnames"][0]
+						else: 
+							#print "No hostnames enumerated"
+							pass
 					except KeyError,err:
 						pass
 				if "country_code" and "country_name" in jso:
